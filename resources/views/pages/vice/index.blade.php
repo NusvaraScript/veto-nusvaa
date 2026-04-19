@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('title', 'Manajemen - VetoNusvaa')
 @section('content')
-    <x-section section="List Kebiasaan Buruk">
+    <x-section section="List">
 
     </x-section>
 @endsection
