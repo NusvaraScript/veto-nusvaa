@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('vices', function (Blueprint $table) {
             $table->id();
             $table->string('habit_name');
-            $table->text('penalty');
+            $table->text('description')->nullable();
             $table->enum('severity', ['rendah', 'medium', 'tinggi']);
             $table->integer('streak_days')->default(0);
             $table->timestamps();

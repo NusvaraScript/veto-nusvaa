@@ -7,12 +7,21 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="antialiased bg-white">
-    @include('layout.component.navbar')
+    <x-navbar />
 
-    @yield('content')
+    <div class="flex flex-1 overflow-hidden">
+        <aside class="w-64 border-r-2 border-black overflow-y-auto bg-gray-50 hidden md:block">
+            <x-sidebar />
+        </aside>
+        <main class="flex-1 overflow-y-auto">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                @yield('content')
+            </div>
 
-    @include('layout.component.footer')
-
+            <x-footer />
+        </main>
+    
+    </div>
     @stack('js')
 </body>
 </html>

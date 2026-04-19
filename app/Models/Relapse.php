@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Relapses extends Model
+class Relapse extends Model
 {
     //
     protected $fillable = ['vices_id', 'violation_date', 'excuse'];
 
-    public function vices(): BelongsTo {
-        return $this->belongsTo(Vices::class, 'vices_id');
+    public function vice(): BelongsTo {
+        return $this->belongsTo(Vice::class, 'vices_id');
     }
 }

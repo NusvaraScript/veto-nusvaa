@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vices;
+use App\Models\Vice;
 use Illuminate\Http\Request;
 
 class VicesController extends Controller
@@ -13,6 +13,10 @@ class VicesController extends Controller
     public function index()
     {
         //
+        $data = [
+            'vices' => Vice::paginate(10)
+        ];
+        return view('pages.vice.index', $data);
     }
 
     /**
@@ -29,12 +33,18 @@ class VicesController extends Controller
     public function store(Request $request)
     {
         //
+        $relapse = Vice::create($request->validate([
+            'habit_name' => 'required|string',
+            'description' => 'nullable|string',
+            'severity' => 'required|integer|min:1|max:10',
+            'streak_days' => 'required|integer|min:0'
+        ]));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Vices $vices)
+    public function show(Vice $vice)
     {
         //
     }
@@ -42,7 +52,7 @@ class VicesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Vices $vices)
+    public function edit(Vice $vice)
     {
         //
     }
@@ -50,7 +60,7 @@ class VicesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Vices $vices)
+    public function update(Request $request, Vice $vice)
     {
         //
     }
@@ -58,7 +68,7 @@ class VicesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Vices $vices)
+    public function destroy(Vice $vice)
     {
         //
     }

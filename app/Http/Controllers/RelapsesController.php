@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Relapses;
+use App\Models\Relapse;
 use Illuminate\Http\Request;
 
 class RelapsesController extends Controller
@@ -34,7 +34,7 @@ class RelapsesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Relapses $relapses)
+    public function show(Relapse $relapse)
     {
         //
     }
@@ -42,7 +42,7 @@ class RelapsesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Relapses $relapses)
+    public function edit(Relapse $relapse)
     {
         //
     }
@@ -50,7 +50,7 @@ class RelapsesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Relapses $relapses)
+    public function update(Request $request, Relapse $relapse)
     {
         //
     }
@@ -58,7 +58,7 @@ class RelapsesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Relapses $relapses)
+    public function destroy(Relapse $relapse)
     {
         //
     }
