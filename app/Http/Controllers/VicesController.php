@@ -25,6 +25,7 @@ class VicesController extends Controller
     public function create()
     {
         //
+        return view('pages.vice.create');
     }
 
     /**
@@ -39,6 +40,7 @@ class VicesController extends Controller
             'severity' => 'required|integer|min:1|max:10',
             'streak_days' => 'required|integer|min:0'
         ]));
+        return to_route('vice.index');
     }
 
     /**
@@ -55,6 +57,8 @@ class VicesController extends Controller
     public function edit(Vice $vice)
     {
         //
+        $data = Vice::findOrFail($vice->id);
+        return view('pages.vice.edit', compact('data'));
     }
 
     /**
@@ -63,6 +67,9 @@ class VicesController extends Controller
     public function update(Request $request, Vice $vice)
     {
         //
+        $data = Vice::findOrFail($vice->id);
+        $data->update($request->all());
+        return to_route('vice.index');
     }
 
     /**
@@ -71,5 +78,7 @@ class VicesController extends Controller
     public function destroy(Vice $vice)
     {
         //
+        Vice::findOrFail($vice->id)->delete();
+        return to_route('vice.index');
     }
 }

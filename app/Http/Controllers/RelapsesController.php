@@ -13,6 +13,9 @@ class RelapsesController extends Controller
     public function index()
     {
         //
+        return view('pages.relapse.index', [
+            'relapses' => Relapse::all()
+        ]);
     }
 
     /**
