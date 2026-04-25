@@ -8,6 +8,7 @@
                     <tr>
                         <th class="p-3 text-left">No</th>
                         <th class="p-3 text-left">Kebiasaan</th>
+                        <th class="p-3 text-left">Alasan</th>
                         <th class="p-3 text-left">Tanggal Relapse</th>
                     </tr>
                 </thead>
@@ -16,6 +17,7 @@
                         <tr class="even:bg-gray-100 hover:bg-red-100/50 border-black border-b-2 transition-all">
                             <td class="p-3">{{ $loop->iteration }}</td> 
                             <td class="p-3 font-bold uppercase">{{ $relapse->vice->habit_name }}</td>
+                            <td class="p-3">{{ $relapse->excuse }}</td>
                             <td class="p-3">{{ $relapse->created_at->format('d M Y') }}</td>
                         </tr>
                     @endforeach

@@ -23,8 +23,8 @@
                             <td class="p-3 uppercase">{{ $vice->severity }}</td>
                             <td class="p-3">{{ $vice->streak_days }}</td>
                             <td class="p-3 flex items-center gap-1">
-                                <x-button route="{{ route('vice.edit', $vice->id) }}" variant="warning" class="text-sm">Edit</x-button>
-                                <x-button route="#" variant="danger" class="text-sm" onclick="handleDelete({{ $vice->id }})">Hapus</x-button>
+                                <a href="{{ route('vice.edit', $vice->id) }}" class="font-bold uppercase px-4 py-1 bg-yellow-600 text-white border-2 border-black hover:bg-yellow-700 hover:scale-105 active:scale-95 transition-all text-sm">Edit</a>
+                                <button type="button" onclick="handleDelete({{ $vice->id }})" class="font-bold uppercase px-4 py-1 bg-red-600 text-white border-2 border-black hover:bg-red-700 hover:scale-105 active:scale-95 transition-all text-sm">Hapus</button>
                             </td>
                         </tr>
                     @endforeach
@@ -37,17 +37,15 @@
         @method('DELETE')
     </form>
 @endsection
+
 @push('js')
     <script>
         function handleDelete(id) {
-            $('#deleteForm').attr('action', '/vice/' + id);
+            document.getElementById('deleteForm').action = '/vice/' + id;
             var check = confirm('Apakah anda yakin akan menghapus ini?');
             if (check) {
-                $('#deleteForm').submit();
+                document.getElementById('deleteForm').submit();
             }
-        }
-        function handleEdit(id) {
-            window.location.href = '/vice/' + id + '/edit/';
         }
     </script>
 @endpush

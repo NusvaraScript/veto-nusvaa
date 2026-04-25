@@ -18,7 +18,7 @@
                 <i class="fa-solid fa-arrow-right"></i>
                 <p class="font-bold">Pages</p>
             </div>
-            <div class="grid grid-cols-1 gap-2 text-center">
+            <div class="grid text-sm grid-cols-1 gap-2 text-center">
                 <x-button route="{{ route('home') }}">Beranda</x-button>
             </div>
         </div>
@@ -27,7 +27,7 @@
                 <i class="fa-solid fa-arrow-right"></i>
                 <p class="font-bold">List</p>
             </div>
-            <div class="grid grid-cols-1 gap-2 text-center">
+            <div class="grid text-sm grid-cols-1 gap-2 text-center">
                 <x-button route="{{ route('vice.index') }}">Kebiasaan Buruk</x-button>
                 <x-button route="{{ route('relapse.index') }}">Relapse</x-button>
             </div>

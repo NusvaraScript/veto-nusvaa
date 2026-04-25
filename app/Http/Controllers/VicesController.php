@@ -34,12 +34,19 @@ class VicesController extends Controller
     public function store(Request $request)
     {
         //
-        $relapse = Vice::create($request->validate([
+        $validated = $request->validate([
             'habit_name' => 'required|string',
             'description' => 'nullable|string',
-            'severity' => 'required|integer|min:1|max:10',
-            'streak_days' => 'required|integer|min:0'
-        ]));
+            'severity' => 'required|in:rendah,sedang,tinggi',
+            'streak_days' => 'nullable|integer|min:0'
+        ]);
+
+        // Default streak_days to 0 if not provided
+        if (!isset($validated['streak_days'])) {
+            $validated['streak_days'] = 0;
+        }
+
+        Vice::create($validated);
         return to_route('vice.index');
     }
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <body class="antialiased bg-white h-screen flex flex-col">
     <x-navbar />
 
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 overflow-hidden">   
         <aside class="w-64 border-r-2 border-black overflow-y-auto bg-gray-50 hidden md:block h-full">
             <x-sidebar />
         </aside>
