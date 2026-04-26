@@ -13,4 +13,13 @@ class Relapse extends Model
     public function vice(): BelongsTo {
         return $this->belongsTo(Vice::class, 'vices_id');
     }
+
+    // Accessor untuk kompatibilitas dengan nama lama
+    public function getRelapseDateAttribute(): string {
+        return $this->violation_date;
+    }
+
+    public function getNotesAttribute(): string {
+        return $this->excuse;
+    }
 }

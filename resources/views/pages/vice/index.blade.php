@@ -2,6 +2,12 @@
 @section('title', 'Manajemen - VetoNusvaa')
 @section('content')
     <x-section section="List Kebiasaan Buruk Kamu">
+        <div class="mb-4">
+            <x-button route="{{ route('vice.create') }}">
+                + Tambah Kebiasaan
+            </x-button>
+        </div>
+        
         <div class="overflow-x-auto">
             <table class="table table-zebra w-full">
                 <thead class="uppercase tracking-widest text-sm border-b-2 border-black">

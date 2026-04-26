@@ -3,7 +3,7 @@
 
 @section('content')
     <section class="py-8">
-        <h1 class="text-2xl font-bold">Form Edit List</h1>
+        <h1 class="text-2xl font-bold mb-4">Form Edit List</h1>
         <p class="text-gray-600">Isi formulir di bawah untuk mengedit list.</p>
 
         <div class="my-4 border-2 border-black p-4">

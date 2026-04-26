@@ -3,7 +3,7 @@
 
 @section('content')
     <section class="py-8">
-        <h1 class="text-2xl font-bold">Form Tambah List</h1>
+        <h1 class="text-2xl font-bold mb-4">Form Tambah List</h1>
         <p class="text-gray-600">Isi formulir di bawah untuk menambahkan list baru.</p>
 
         <div class="my-4 border-2 border-black p-4">
@@ -31,11 +31,12 @@
                             class="mt-1 w-full border-2 border-black p-1 hover:ring-red-500 hover:border-red-500"></textarea>
                     </div>
                     <div class="col-span-2">
-                        <button type="submit" class="w-full text-black border-2 border-black px-4 py-1 font-bold uppercase hover:bg-red-600 hover:text-white transition hover:shadow-[5px_5px_0px_#fff] hover:scale-105
-                        active:scale-95
-                        transition-all">
-                            Simpan
+                        <button type="submit" class="flex-1 text-black border-2 border-black px-4 py-1 font-bold uppercase bg-red-600 text-white hover:bg-red-700 hover:scale-105 active:scale-95 transition-all">
+                            Simpan Kebiasaan
                         </button>
+                        <x-button route="{{ route('vice.index') }}" variant="outline">
+                            Batal
+                        </x-button>
                     </div>
                 </div>
             </form>
