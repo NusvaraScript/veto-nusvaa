@@ -45,7 +45,7 @@
                         <thead>
                             <tr class="border-b-2 border-black">
                                 <th class="p-2 text-left">Kebiasaan</th>
-                                <th class="p-2 text-left">Severity</th>
+                                <th class="p-2 text-left">Keparahan</th>
                                 <th class="p-2 text-right">Streak</th>
                             </tr>
                         </thead>

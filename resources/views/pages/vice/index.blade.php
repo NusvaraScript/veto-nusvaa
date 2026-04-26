@@ -7,7 +7,7 @@
                 + Tambah Kebiasaan
             </x-button>
         </div>
-        
+
         <div class="overflow-x-auto">
             <table class="table table-zebra w-full">
                 <thead class="uppercase tracking-widest text-sm border-b-2 border-black">
@@ -26,7 +26,14 @@
                             <td class="p-3">{{ $loop->iteration }}</td> 
                             <td class="p-3 font-bold uppercase">{{ $vice->habit_name }}</td>
                             <td class="p-3">{{ $vice->description }}</td>
-                            <td class="p-3 uppercase">{{ $vice->severity }}</td>
+                            <td class="p-3 uppercase">
+                                <span class="px-2 py-1 text-xs font-bold uppercase
+                                            @if($vice->severity == 'tinggi') bg-red-100 text-red-700
+                                            @elseif($vice->severity == 'sedang') bg-yellow-100 text-yellow-700
+                                            @else bg-green-100 text-green-700 @endif">
+                                            {{ $vice->severity }}
+                                </span>
+                            </td>
                             <td class="p-3">{{ $vice->streak_days }}</td>
                             <td class="p-3 flex items-center gap-1">
                                 <a href="{{ route('vice.edit', $vice->id) }}" class="font-bold uppercase px-4 py-1 bg-yellow-600 text-white border-2 border-black hover:bg-yellow-700 hover:scale-105 active:scale-95 transition-all text-sm">Edit</a>
