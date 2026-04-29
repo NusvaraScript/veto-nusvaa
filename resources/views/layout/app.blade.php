@@ -13,9 +13,13 @@
     <x-navbar />
 
     <div class="flex flex-1 overflow-hidden">
-        <aside class="w-64 border-r border-slate-200 overflow-y-auto bg-white/80 backdrop-blur hidden md:block h-full">
-            <x-sidebar />
-        </aside>
+        @auth
+            @if (auth()->user()->role === 'user')
+                <aside class="w-64 border-r border-slate-200 overflow-y-auto bg-white/80 backdrop-blur hidden md:block h-full">
+                    <x-sidebar />
+                </aside>
+            @endif
+        @endauth
 
         <main class="flex-1 overflow-y-auto h-full">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-4">
