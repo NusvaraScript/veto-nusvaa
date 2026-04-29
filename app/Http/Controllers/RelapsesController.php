@@ -10,91 +10,65 @@ use Illuminate\Support\Facades\DB;
 class RelapsesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Tampilkan daftar relapse terbaru dengan relasi vice.
      */
     public function index()
     {
-        //
-        $data = [
-            'relapses' => Relapse::with('vice')->latest()->paginate(10)
-        ];
-        return view('pages.relapse.index', $data);
+        return view('pages.relapse.index', [
+            'relapses' => Relapse::with('vice')->latest()->paginate(10),
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Tampilkan form pencatatan relapse beserta opsi vice.
      */
     public function create()
     {
-        //
-        $vices = Vice::all()->map(function ($vice) {
-            return [
-                'id' => $vice->id,
-                'label' => $vice->habit_name . ' (' . ucfirst($vice->severity) . ')'
-            ];
-        });
-        
+        $vices = Vice::all()->map(fn (Vice $vice) => [
+            'id' => $vice->id,
+            'label' => $vice->habit_name.' ('.ucfirst($vice->severity).')',
+        ]);
+
         return view('pages.relapse.create', ['vices' => $vices]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Simpan data relapse dan reset streak vice ke 0 secara atomik.
      */
     public function store(Request $request)
     {
-        //
         $validated = $request->validate([
             'vices_id' => 'required|exists:vices,id',
             'violation_date' => 'required|date',
-            'excuse' => 'nullable|string|max:500'
+            'excuse' => 'nullable|string|max:500',
         ]);
 
-        try {
-            DB::beginTransaction();
-            
-            // Simpan relapse
-            $relapse = Relapse::create($validated);
-            
-            // Update streakvice ke 0 karena kambuh
-            $vice = Vice::findOrFail($validated['vices_id']);
-            $vice->update(['streak_days' => 0]);
-            
-            DB::commit();
-            
-            return to_route('relapse.index')->with('success', 'Relapse berhasil dicatat!');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('error', 'Gagal menyimpan relapse: ' . $e->getMessage())->withInput();
-        }
+        DB::transaction(function () use ($validated): void {
+            // Catat kejadian relapse terlebih dahulu.
+            Relapse::create($validated);
+
+            // Karena terjadi relapse, streak vice direset ke nol.
+            Vice::findOrFail($validated['vices_id'])->update(['streak_days' => 0]);
+        });
+
+        return to_route('relapse.index')->with('success', 'Relapse berhasil dicatat!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Relapse $relapse)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Relapse $relapse)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Relapse $relapse)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Relapse $relapse)
     {
         //
