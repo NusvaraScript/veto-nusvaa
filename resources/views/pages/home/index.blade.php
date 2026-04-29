@@ -2,42 +2,42 @@
 @section('title', 'Beranda - VetoNusvaa')
 @section('content')
     <x-section section="Dashboard">
-        <div class="mb-6 rounded-xl border border-blue-200 bg-blue-50 p-4">
-            <p class="text-sm text-blue-900">Selamat datang! Pantau progresmu setiap hari untuk membangun kebiasaan yang lebih sehat.</p>
+        <div class="mb-6 border-2 border-black bg-red-50 p-4">
+            <p class="text-md text-black">Selamat datang! Pantau progresmu setiap hari untuk membangun kebiasaan yang lebih sehat.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            <x-card>
                 <p class="text-sm text-gray-500 uppercase">Total Kebiasaan</p>
                 <p class="text-3xl font-bold">{{ $totalVices }}</p>
-            </div>
-            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            </x-card>
+            <x-card>
                 <p class="text-sm text-gray-500 uppercase">Total Relapse</p>
                 <p class="text-3xl font-bold text-red-600">{{ $totalRelapses }}</p>
-            </div>
-            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            </x-card>
+            <x-card>
                 <p class="text-sm text-gray-500 uppercase">Rata-rata Streak</p>
                 <p class="text-3xl font-bold text-green-600">{{ $avgStreak }} <span class="text-sm font-normal">hari</span></p>
-            </div>
+            </x-card>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div class="rounded-xl border border-green-200 p-4 bg-green-50">
+            <x-card class="bg-green-50">
                 <p class="text-sm text-gray-500 uppercase">Rendah</p>
                 <p class="text-2xl font-bold text-green-600">{{ $vicesRendah }}</p>
-            </div>
-            <div class="rounded-xl border border-yellow-200 p-4 bg-yellow-50">
+            </x-card>
+            <x-card class="bg-yellow-50">
                 <p class="text-sm text-gray-500 uppercase">Sedang</p>
                 <p class="text-2xl font-bold text-yellow-700">{{ $vicesSedang }}</p>
-            </div>
-            <div class="rounded-xl border border-red-200 p-4 bg-red-50">
+            </x-card>
+            <x-card class="bg-red-50">
                 <p class="text-sm text-gray-500 uppercase">Tinggi</p>
                 <p class="text-2xl font-bold text-red-600">{{ $vicesTinggi }}</p>
-            </div>
+            </x-card>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            <x-card>
                 <h3 class="text-lg font-bold uppercase mb-4">Streak Tertinggi</h3>
                 @if($topStreakVices->isEmpty())
                     <p class="text-gray-500">Belum ada kebiasaan.</p>
@@ -68,9 +68,9 @@
                         </tbody>
                     </table>
                 @endif
-            </div>
+            </x-card>
 
-            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+            <x-card>
                 <h3 class="text-lg font-bold uppercase mb-4">Relapse Terbaru</h3>
                 @if($latestRelapses->isEmpty())
                     <p class="text-gray-500">Belum ada riwayat relapse.</p>
@@ -94,7 +94,7 @@
                         </tbody>
                     </table>
                 @endif
-            </div>
+            </x-card>
         </div>
 
         <div class="mt-6 flex flex-wrap gap-3">
