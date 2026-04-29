@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'pages.landing.index')->name('landing');
 
-Route::middleware('guest')->group(function () {
+Route::group(['middleware' => ['guest']], function (): void {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
 });
 
-Route::middleware('auth')->group(function () {
+Route::group(['middleware' => ['auth']], function (): void {
     Route::get('/dashboard', function () {
         return auth()->user()->role === 'admin'
             ? redirect()->route('admin.dashboard')
@@ -25,11 +25,11 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::middleware('admin')->group(function () {
+    Route::group(['middleware' => ['admin']], function (): void {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
     });
 
-    Route::middleware('regular')->group(function () {
+    Route::group(['middleware' => ['regular']], function (): void {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::resource('/vice', VicesController::class);
         Route::resource('/relapse', RelapsesController::class);
