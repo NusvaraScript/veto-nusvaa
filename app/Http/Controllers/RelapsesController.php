@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class RelapsesController extends Controller
 {
+    /**
+     * Tampilkan daftar relapse terbaru dengan relasi vice.
+     */
     public function index()
     {
         return view('pages.relapse.index', [
@@ -16,6 +19,9 @@ class RelapsesController extends Controller
         ]);
     }
 
+    /**
+     * Tampilkan form pencatatan relapse beserta opsi vice.
+     */
     public function create()
     {
         $vices = Vice::all()->map(fn (Vice $vice) => [
@@ -26,6 +32,9 @@ class RelapsesController extends Controller
         return view('pages.relapse.create', ['vices' => $vices]);
     }
 
+    /**
+     * Simpan data relapse dan reset streak vice ke 0 secara atomik.
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -35,8 +44,10 @@ class RelapsesController extends Controller
         ]);
 
         DB::transaction(function () use ($validated): void {
+            // Catat kejadian relapse terlebih dahulu.
             Relapse::create($validated);
 
+            // Karena terjadi relapse, streak vice direset ke nol.
             Vice::findOrFail($validated['vices_id'])->update(['streak_days' => 0]);
         });
 
