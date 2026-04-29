@@ -2,18 +2,18 @@
 @section('title', 'Relapse - VetoNusvaa')
 @section('content')
     <x-section section="List Relapse Kamu">
-        <div class="mb-4 rounded-xl border border-slate-200 bg-white p-4">
+        <x-card class="p-4 mb-4">
             <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                <p class="text-sm text-slate-600">Catat kambuh untuk evaluasi pola dan menjaga konsistensi pemulihan.</p>
+                <p class="text-md text-black">Catat kambuh untuk evaluasi pola dan menjaga konsistensi pemulihan.</p>
                 <x-button route="{{ route('relapse.create') }}">
                     + Tambah Relapse
                 </x-button>
             </div>
-        </div>
+        </x-card>
 
-        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-            <table class="w-full">
-                <thead class="uppercase tracking-widest text-xs bg-slate-100 text-slate-700">
+        <div class="overflow-x-auto">
+            <table class="table table-zebra w-full">
+                <thead class="uppercase tracking-widest text-sm border-b-2 border-black">
                     <tr>
                         <th class="p-3 text-left">No</th>
                         <th class="p-3 text-left">Kebiasaan</th>
@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                     @forelse($relapses as $relapse)
-                        <tr class="border-t border-slate-100 hover:bg-slate-50 transition-all">
+                        <tr class="even:bg-gray-100 hover:bg-red-100/50 border-black border-b-2 transition-all">
                             <td class="p-3">{{ $relapses->firstItem() + $loop->index }}</td>
                             <td class="p-3 font-semibold uppercase">{{ $relapse->vice->habit_name ?? '-' }}</td>
                             <td class="p-3 text-slate-600">{{ $relapse->excuse ?? '-' }}</td>

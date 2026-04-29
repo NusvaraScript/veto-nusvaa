@@ -9,17 +9,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="antialiased min-h-screen flex flex-col bg-slate-50 text-slate-900">
+<body class="antialiased h-screen flex flex-col bg-slate-50 text-slate-900">
     <x-navbar />
 
     <div class="flex flex-1 overflow-hidden">
-        @auth
-            @if (auth()->user()->role === 'user')
-                <aside class="w-64 border-r border-slate-200 overflow-y-auto bg-white/80 backdrop-blur hidden md:block h-full">
-                    <x-sidebar />
-                </aside>
-            @endif
-        @endauth
+        <aside class="w-64 border-r-2 border-black overflow-y-auto bg-gray-50 hidden md:block h-full">
+            <x-sidebar />
+        </aside>
 
         <main class="flex-1 overflow-y-auto h-full">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-4">
