@@ -3,11 +3,46 @@
 
 @section('content')
 <div class="bg-white text-black font-sans selection:bg-red-600 selection:text-white">
-    
+    {{-- Navbar --}}
+    <nav class="sticky top-0 z-50 bg-white border-b-4 border-black px-4 sm:px-8 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            {{-- Logo --}}
+            <a href="/" class="flex items-center gap-2 group">
+                <div class="bg-black text-white p-1 border-2 border-black shadow-[3px_3px_0px_0px_rgba(220,38,38,1)] group-hover:shadow-none group-hover:translate-x-[2px] group-hover:translate-y-[2px] transition-all">
+                    <span class="text-xl font-black tracking-tighter italic px-1">VN.</span>
+                </div>
+                <span class="text-xl font-black uppercase italic tracking-tighter hidden sm:block">
+                    Veto<span class="text-red-600">Nusvaa</span>
+                </span>
+            </a>
+
+            {{-- Nav Links --}}
+            <div class="flex items-center gap-4 sm:gap-8">
+                <a href="#features" class="text-xs font-black uppercase italic hover:text-red-600 transition-colors hidden md:block">Fitur</a>
+                
+                @if (Route::has('login'))
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="border-2 border-black bg-black text-white px-4 py-2 text-xs font-black uppercase italic shadow-[3px_3px_0px_0px_rgba(220,38,38,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
+                            Dashboard
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="text-xs font-black uppercase italic hover:text-red-600 transition-colors">Masuk</a>
+                        
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="border-2 border-black bg-red-600 text-white px-4 py-2 text-xs font-black uppercase italic shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
+                                Daftar
+                            </a>
+                        @endif
+                    @endauth
+                @endif
+            </div>
+        </div>
+    </nav>
+
     {{-- Hero Section --}}
     <header class="min-h-[80vh] flex flex-col items-center justify-center text-center px-4 border-b-8 border-black bg-slate-50 relative overflow-hidden">
         {{-- Aksen Latar Belakang --}}
-        <div class="absolute top-10 left-10 text-slate-200 -z-0 select-none">
+        <div class="absolute top-10 left-10 text-slate-200 -z-1 md:-z-0 select-none">
             <i class="fa-solid fa-ban text-[20rem] rotate-12"></i>
         </div>
 
