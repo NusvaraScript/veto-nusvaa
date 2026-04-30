@@ -1,45 +1,66 @@
 @extends('user.layout.app')
-@section('title', 'Relapse - VetoNusvaa')
-@section('content')
-    <x-section section="List Relapse Kamu">
-        <x-card class="p-4 mb-4">
-            <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                <p class="text-md text-black">Catat kambuh untuk evaluasi pola dan menjaga konsistensi pemulihan.</p>
-                <x-button route="{{ route('relapse.create') }}">
-                    + Tambah Relapse
-                </x-button>
-            </div>
-        </x-card>
+@section('title', 'Riwayat Relapse - VetoNusvaa')
 
-        <div class="overflow-x-auto">
-            <table class="table table-zebra w-full">
-                <thead class="uppercase tracking-widest text-sm border-b-2 border-black">
-                    <tr>
-                        <th class="p-3 text-left">No</th>
-                        <th class="p-3 text-left">Kebiasaan</th>
-                        <th class="p-3 text-left">Alasan</th>
-                        <th class="p-3 text-left">Tanggal Kambuh</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($relapses as $relapse)
-                        <tr class="even:bg-gray-100 hover:bg-red-100/50 border-black border-b-2 transition-all">
-                            <td class="p-3">{{ $relapses->firstItem() + $loop->index }}</td>
-                            <td class="p-3 font-semibold uppercase">{{ $relapse->vice->habit_name ?? '-' }}</td>
-                            <td class="p-3 text-slate-600">{{ $relapse->excuse ?? '-' }}</td>
-                            <td class="p-3">{{ \Carbon\Carbon::parse($relapse->violation_date)->format('d M Y') }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="p-8 text-center text-slate-500">Belum ada data relapse. Kamu bisa mulai mencatat dari tombol di atas.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+@section('content')
+    <x-section section="Riwayat Relapse">
+        
+        {{-- Header & Action --}}
+        <div class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <h2 class="text-xl font-black uppercase italic tracking-tighter">Log Kekalahan</h2>
+                <p class="text-[10px] font-bold text-gray-500 uppercase">Pelajari polanya agar tidak jatuh di lubang yang sama.</p>
+            </div>
+            <x-button route="{{ route('relapse.create') }}" class="border-2 border-black bg-red-600 text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all py-2 text-xs uppercase font-black">
+                + Catat Relapse Baru
+            </x-button>
         </div>
 
-        <div class="mt-4">
+        {{-- Tabel / List Data --}}
+        <div class="border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-gray-50 border-b-2 border-black">
+                        <tr>
+                            <th class="p-4 text-[10px] font-black uppercase tracking-widest w-16">No</th>
+                            <th class="p-4 text-[10px] font-black uppercase tracking-widest">Kebiasaan</th>
+                            <th class="p-4 text-[10px] font-black uppercase tracking-widest">Alasan / Excuse</th>
+                            <th class="p-4 text-[10px] font-black uppercase tracking-widest text-right">Tanggal</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y-2 divide-black">
+                        @forelse($relapses as $relapse)
+                            <tr class="hover:bg-red-50 transition-colors">
+                                <td class="p-4 text-xs font-bold">{{ $relapses->firstItem() + $loop->index }}</td>
+                                <td class="p-4">
+                                    <span class="text-xs font-black uppercase px-2 py-1 border border-black bg-white">
+                                        {{ $relapse->vice->habit_name ?? '-' }}
+                                    </span>
+                                </td>
+                                <td class="p-4 text-xs font-medium text-gray-600 italic">
+                                    "{{ $relapse->excuse ?? 'Tanpa alasan/catatan.' }}"
+                                </td>
+                                <td class="p-4 text-right">
+                                    <span class="text-[10px] font-black uppercase bg-black text-white px-2 py-1">
+                                        {{ \Carbon\Carbon::parse($relapse->violation_date)->format('d / m / Y') }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="p-12 text-center">
+                                    <p class="text-xs font-bold uppercase text-gray-400 italic">Bersih. Tidak ada data relapse yang tercatat.</p>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {{-- Pagination --}}
+        <div class="mt-6">
             {{ $relapses->links() }}
         </div>
+
     </x-section>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Relapse;
 use App\Models\User;
 use App\Models\Vice;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -43,5 +44,44 @@ class AdminController extends Controller
                 ->take(8)
                 ->get(['id', 'name', 'email', 'created_at']),
         ]);
+    }
+
+    public function storeUser(Request $request)
+    {
+        $validated = $request->validate([
+            'name'                  => 'required|string|max:255',
+            'email'                 => 'required|email|max:255|unique:users,email',
+            'password'              => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required',
+        ]);
+
+        User::create([
+            'name'     => $validated['name'],
+            'email'    => $validated['email'],
+            'password' => $validated['password'],
+            'role'     => 'user',
+        ]);
+
+        return redirect()
+            ->route('admin.dashboard')
+            ->with('success', 'Akun user baru berhasil ditambahkan.');
+    }
+
+    public function updateUserPassword(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'password'              => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required',
+        ]);
+
+        abort_if($user->role !== 'user', 403);
+
+        $user->update([
+            'password' => $validated['password'],
+        ]);
+
+        return redirect()
+            ->route('admin.dashboard')
+            ->with('success', "Password untuk {$user->name} berhasil diperbarui.");
     }
 }

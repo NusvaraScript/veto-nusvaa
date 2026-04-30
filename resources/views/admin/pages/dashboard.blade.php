@@ -12,6 +12,56 @@
         </p>
     </div>
 
+    @if (session('success'))
+        <div class="mb-6 border-2 border-green-700 bg-green-50 px-4 py-3 text-sm font-semibold text-green-800 shadow-[4px_4px_0px_#000]">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="mb-6 border-2 border-red-700 bg-red-50 px-4 py-3 text-sm text-red-800 shadow-[4px_4px_0px_#000]">
+            <p class="font-bold mb-1">Gagal menyimpan perubahan:</p>
+            <ul class="list-disc pl-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-3">Tambah User Manual</h2>
+    <form method="POST" action="{{ route('admin.users.store') }}"
+        class="mb-8 border-2 border-black bg-white p-5 shadow-[4px_4px_0px_#000] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        @csrf
+        <div>
+            <label for="name" class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Nama</label>
+            <input id="name" name="name" type="text" required value="{{ old('name') }}"
+                class="w-full border-2 border-black px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+        <div>
+            <label for="email" class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Email</label>
+            <input id="email" name="email" type="email" required value="{{ old('email') }}"
+                class="w-full border-2 border-black px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+        <div>
+            <label for="password" class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Password</label>
+            <input id="password" name="password" type="password" required
+                class="w-full border-2 border-black px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+        <div>
+            <label for="password_confirmation"
+                class="block text-xs uppercase tracking-wider text-gray-500 mb-1">Konfirmasi Password</label>
+            <input id="password_confirmation" name="password_confirmation" type="password" required
+                class="w-full border-2 border-black px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+        <div class="sm:col-span-2 lg:col-span-4">
+            <button type="submit"
+                class="border-2 border-black bg-black px-4 py-2 text-xs font-bold uppercase tracking-widest text-white shadow-[2px_2px_0px_#000] hover:bg-gray-800">
+                Tambah User
+            </button>
+        </div>
+    </form>
+
     {{-- Stat Cards: Pengguna --}}
     <h2 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-3">Statistik Pengguna</h2>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -93,6 +143,7 @@
                     <th class="p-3 text-left font-bold uppercase tracking-wider">Nama</th>
                     <th class="p-3 text-left font-bold uppercase tracking-wider">Email</th>
                     <th class="p-3 text-left font-bold uppercase tracking-wider">Bergabung</th>
+                    <th class="p-3 text-left font-bold uppercase tracking-wider">Edit Password</th>
                 </tr>
             </thead>
             <tbody>
@@ -102,10 +153,25 @@
                         <td class="p-3 font-semibold">{{ $user->name }}</td>
                         <td class="p-3 text-gray-600">{{ $user->email }}</td>
                         <td class="p-3 text-gray-500">{{ $user->created_at->format('d M Y') }}</td>
+                        <td class="p-3">
+                            <form method="POST" action="{{ route('admin.users.password.update', $user) }}"
+                                class="flex flex-col sm:flex-row gap-2">
+                                @csrf
+                                @method('PATCH')
+                                <input type="password" name="password" placeholder="Password baru" required
+                                    class="w-full border-2 border-black px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                                <input type="password" name="password_confirmation" placeholder="Konfirmasi" required
+                                    class="w-full border-2 border-black px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                                <button type="submit"
+                                    class="border-2 border-black bg-white px-3 py-1 text-xs font-bold uppercase tracking-wider hover:bg-black hover:text-white">
+                                    Update
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="p-8 text-center text-gray-400">Belum ada user terdaftar.</td>
+                        <td colspan="5" class="p-8 text-center text-gray-400">Belum ada user terdaftar.</td>
                     </tr>
                 @endforelse
             </tbody>
