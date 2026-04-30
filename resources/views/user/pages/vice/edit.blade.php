@@ -5,12 +5,13 @@
     <x-section section="Form Edit List">
         
         {{-- Header Info --}}
-        <div class="mb-6">
-            <h2 class="text-xl font-black uppercase italic tracking-tighter text-black">Perbarui Kebiasaan</h2>
-            <p class="text-xs font-bold text-gray-500 uppercase">Sesuaikan strategi atau deskripsi untuk hasil yang lebih baik.</p>
-        </div>
+        <x-page-header
+            title="Perbarui Kebiasaan"
+            subtitle="Sesuaikan strategi atau deskripsi untuk hasil yang lebih baik."
+            title-class="text-xl font-black uppercase italic tracking-tighter text-black"
+        />
 
-        <div class="border-2 border-black bg-white p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        <x-panel class="p-6">
             <form action="{{ route('vice.update', $data->id) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -67,6 +68,6 @@
 
                 </div>
             </form>
-        </div>
+        </x-panel>
     </x-section>
 @endsection

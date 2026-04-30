@@ -5,12 +5,13 @@
     <x-section section="Form Tambah Relapse">
         
         {{-- Header Info --}}
-        <div class="mb-6">
-            <h2 class="text-xl font-black uppercase italic tracking-tighter">Catat Kekalahan</h2>
-            <p class="text-xs font-bold text-gray-500 uppercase">Jujur pada diri sendiri adalah langkah pertama untuk bangkit.</p>
-        </div>
+        <x-page-header
+            title="Catat Kekalahan"
+            subtitle="Jujur pada diri sendiri adalah langkah pertama untuk bangkit."
+            title-class="text-xl font-black uppercase italic tracking-tighter"
+        />
 
-        <div class="border-2 border-black bg-white p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        <x-panel class="p-6">
             <form action="{{ route('relapse.store') }}" method="POST">
                 @csrf
                 <div class="grid grid-cols-1 gap-6">
@@ -69,7 +70,7 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </x-panel>
 
     </x-section>
 @endsection

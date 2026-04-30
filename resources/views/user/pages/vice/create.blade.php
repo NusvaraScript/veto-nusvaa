@@ -5,12 +5,13 @@
     <x-section section="Form Tambah List">
         
         {{-- Header Info --}}
-        <div class="mb-6">
-            <h2 class="text-xl font-black uppercase italic tracking-tighter text-black">Tambah List Baru</h2>
-            <p class="text-xs font-bold text-gray-500 uppercase">Definisikan kebiasaan yang ingin kamu hentikan hari ini.</p>
-        </div>
+        <x-page-header
+            title="Tambah List Baru"
+            subtitle="Definisikan kebiasaan yang ingin kamu hentikan hari ini."
+            title-class="text-xl font-black uppercase italic tracking-tighter text-black"
+        />
 
-        <div class="border-2 border-black bg-white p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+        <x-panel class="p-6">
             <form action="{{ route('vice.store') }}" method="POST">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -64,7 +65,7 @@
 
                 </div>
             </form>
-        </div>
+        </x-panel>
 
     </x-section>
 @endsection 

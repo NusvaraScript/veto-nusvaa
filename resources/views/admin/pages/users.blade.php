@@ -3,12 +3,13 @@
 
 @section('content')
     {{-- Header Section --}}
-    <div class="mb-8">
-        <h1 class="text-3xl font-black uppercase italic tracking-tighter text-black">
-            Kelola User<span class="text-red-600">.</span>
-        </h1>
-        <div class="mt-2 h-1 w-12 bg-black"></div>
-    </div>
+    <x-page-header
+        title="Kelola User."
+        title-class="text-3xl font-black uppercase italic tracking-tighter text-black"
+        wrapper-class="mb-8"
+        subtitle-class="hidden"
+    />
+    <div class="-mt-6 mb-8 h-1 w-12 bg-black"></div>
 
     {{-- Alert Errors --}}
     @if ($errors->any())
