@@ -41,11 +41,6 @@
 
     {{-- Hero Section --}}
     <header class="min-h-[80vh] flex flex-col items-center justify-center text-center px-4 border-b-8 border-black bg-slate-50 relative overflow-hidden">
-        {{-- Aksen Latar Belakang --}}
-        <div class="absolute top-10 left-10 text-slate-200 -z-1 md:-z-0 select-none">
-            <i class="fa-solid fa-ban text-[20rem] rotate-12"></i>
-        </div>
-
         <div class="relative z-10">
             <div class="inline-block border-2 border-black bg-red-600 text-white px-4 py-1 mb-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] uppercase font-black italic tracking-widest animate-bounce">
                 Hentikan Relapse Sekarang.
