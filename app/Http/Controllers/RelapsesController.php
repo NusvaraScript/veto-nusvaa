@@ -11,7 +11,7 @@ class RelapsesController extends Controller
 {
     public function index()
     {
-        return view('pages.relapse.index', [
+        return view('user.pages.relapse.index', [
             'relapses' => Relapse::with('vice')
                 ->whereHas('vice', fn ($q) => $q->where('user_id', auth()->id()))
                 ->latest()
@@ -29,7 +29,7 @@ class RelapsesController extends Controller
                 'label' => $vice->habit_name.' ('.ucfirst($vice->severity).')',
             ]);
 
-        return view('pages.relapse.create', ['vices' => $vices]);
+        return view('user.pages.relapse.create', ['vices' => $vices]);
     }
 
     public function store(Request $request)

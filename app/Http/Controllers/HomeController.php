@@ -17,7 +17,7 @@ class HomeController extends Controller
         // Hanya ambil vice milik user ini
         $userVices = Vice::where('user_id', $userId);
 
-        return view('pages.home.index', [
+        return view('user.pages.home.index', [
             // Statistik milik user sendiri
             'totalVices'    => $userVices->count(),
             'totalRelapses' => Relapse::whereHas('vice', fn ($q) => $q->where('user_id', $userId))->count(),

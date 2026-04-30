@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('user.layout.app')
 @section('title', 'Relapse - VetoNusvaa')
 @section('content')
     <x-section section="List Relapse Kamu">

@@ -12,14 +12,14 @@ class VicesController extends Controller
      */
     public function index()
     {
-        return view('pages.vice.index', [
+        return view('user.pages.vice.index', [
             'vices' => Vice::where('user_id', auth()->id())->paginate(10),
         ]);
     }
 
     public function create()
     {
-        return view('pages.vice.create');
+        return view('user.pages.vice.create');
     }
 
     public function store(Request $request)
@@ -48,7 +48,7 @@ class VicesController extends Controller
     {
         $this->authorizeVice($vice);
 
-        return view('pages.vice.edit', ['data' => $vice]);
+        return view('user.pages.vice.edit', ['data' => $vice]);
     }
 
     public function update(Request $request, Vice $vice)

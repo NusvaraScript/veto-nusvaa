@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('user.layout.app')
 @section('title', 'Manajemen - VetoNusvaa')
 @section('content')
     <x-section section="List Kebiasaan Buruk Kamu">
