@@ -9,15 +9,11 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Dashboard admin: statistik global website, tanpa data pribadi user.
-     */
     public function dashboard()
     {
         $totalUsers = User::where('role', 'user')->count();
 
         return view('admin.pages.dashboard', [
-            // Statistik pengguna
             'totalUsers'         => $totalUsers,
             'newUsersThisMonth'  => User::where('role', 'user')
                 ->whereMonth('created_at', now()->month)
@@ -26,22 +22,22 @@ class AdminController extends Controller
             'newUsersThisWeek'   => User::where('role', 'user')
                 ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
                 ->count(),
-
-            // Statistik konten (agregat, bukan data personal)
             'totalVices'         => Vice::count(),
             'totalRelapses'      => Relapse::count(),
             'avgVicesPerUser'    => $totalUsers > 0 ? round(Vice::count() / $totalUsers, 1) : 0,
             'avgRelapsesPerUser' => $totalUsers > 0 ? round(Relapse::count() / $totalUsers, 1) : 0,
+            'vicesRendah'        => Vice::where('severity', 'rendah')->count(),
+            'vicesSedang'        => Vice::where('severity', 'sedang')->count(),
+            'vicesTinggi'        => Vice::where('severity', 'tinggi')->count(),
+        ]);
+    }
 
-            // Severity breakdown (tanpa tau siapa pemiliknya)
-            'vicesRendah'  => Vice::where('severity', 'rendah')->count(),
-            'vicesSedang'  => Vice::where('severity', 'sedang')->count(),
-            'vicesTinggi'  => Vice::where('severity', 'tinggi')->count(),
-
-            // Daftar user terbaru (hanya info akun, bukan data kebiasaan)
-            'recentUsers'  => User::where('role', 'user')
+    public function users()
+    {
+        return view('admin.pages.users', [
+            'recentUsers' => User::where('role', 'user')
                 ->latest()
-                ->take(8)
+                ->take(20)
                 ->get(['id', 'name', 'email', 'created_at']),
         ]);
     }
@@ -63,7 +59,7 @@ class AdminController extends Controller
         ]);
 
         return redirect()
-            ->route('admin.dashboard')
+            ->route('admin.users.index')
             ->with('success', 'Akun user baru berhasil ditambahkan.');
     }
 
@@ -81,7 +77,7 @@ class AdminController extends Controller
         ]);
 
         return redirect()
-            ->route('admin.dashboard')
+            ->route('admin.users.index')
             ->with('success', "Password untuk {$user->name} berhasil diperbarui.");
     }
 }
