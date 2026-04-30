@@ -49,10 +49,10 @@ class AdminController extends Controller
     public function users()
     {
         return view('admin.pages.users', [
-            'recentUsers' => User::where('role', 'user')
+            'recentUsers' => User::query()
                 ->latest()
                 ->take(20)
-                ->get(['id', 'name', 'email', 'created_at']),
+                ->get(['id', 'name', 'email', 'role', 'created_at']),
         ]);
     }
 

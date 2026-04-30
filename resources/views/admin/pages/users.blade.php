@@ -67,6 +67,7 @@
                     <tr>
                         <th class="p-4 text-[10px] font-black uppercase tracking-widest w-16 text-center">No</th>
                         <th class="p-4 text-[10px] font-black uppercase tracking-widest">Identitas</th>
+                        <th class="p-4 text-[10px] font-black uppercase tracking-widest">Role</th>
                         <th class="p-4 text-[10px] font-black uppercase tracking-widest">Bergabung</th>
                         <th class="p-4 text-[10px] font-black uppercase tracking-widest">Ganti Password</th>
                     </tr>
@@ -78,6 +79,9 @@
                             <td class="p-4">
                                 <p class="text-xs font-black uppercase">{{ $user->name }}</p>
                                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-tight">{{ $user->email }}</p>
+                            </td>
+                            <td class="p-4">
+                                <p class="text-xs font-black uppercase">{{ $user->role }}</p>
                             </td>
                             <td class="p-4">
                                 <span class="text-[10px] font-black uppercase border-2 border-black px-2 py-1 bg-white">
