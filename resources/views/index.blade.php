@@ -1,4 +1,4 @@
-@extends('user.layout.app') {{-- Atau layout publik lainnya --}}
+@extends('layout.guest')
 @section('title', 'VetoNusvaa — Ambil Kendali Atas Hidupmu')
 
 @section('content')

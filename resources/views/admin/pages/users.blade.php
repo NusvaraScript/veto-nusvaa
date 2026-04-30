@@ -1,4 +1,4 @@
-@extends('admin.layout.app')
+@extends('layout.admin')
 @section('title', 'Kelola User Admin — VetoNusvaa')
 
 @section('content')
