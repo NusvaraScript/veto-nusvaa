@@ -59,7 +59,7 @@ class VicesController extends Controller
             'habit_name'  => 'required|string',
             'description' => 'nullable|string',
             'severity'    => 'required|in:rendah,sedang,tinggi',
-            'streak_days' => 'required|integer|min:0',
+            'streak_days' => 'nullable|integer|min:0',
         ]);
 
         $vice->update($validated);

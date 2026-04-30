@@ -43,6 +43,9 @@
                         </a>
                     </div>
                 @endauth
+                <button id="openSidebar" class="inline-flex md:hidden items-center justify-center border-2 border-black bg-white p-2 text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] transition-all">
+                    <i class="fa-solid fa-bars-staggered text-xl"></i>
+                </button>
             </div>
 
         </div>
