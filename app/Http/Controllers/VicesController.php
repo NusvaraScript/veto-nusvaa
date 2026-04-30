@@ -8,63 +8,57 @@ use Illuminate\Http\Request;
 class VicesController extends Controller
 {
     /**
-     * Tampilkan daftar kebiasaan buruk (vice) dengan pagination.
+     * Hanya tampilkan vice milik user yang login.
      */
     public function index()
     {
         return view('pages.vice.index', [
-            'vices' => Vice::paginate(10),
+            'vices' => Vice::where('user_id', auth()->id())->paginate(10),
         ]);
     }
 
-    /**
-     * Tampilkan form untuk menambah vice baru.
-     */
     public function create()
     {
         return view('pages.vice.create');
     }
 
-    /**
-     * Simpan vice baru setelah lolos validasi.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'habit_name' => 'required|string',
+            'habit_name'  => 'required|string',
             'description' => 'nullable|string',
-            'severity' => 'required|in:rendah,sedang,tinggi',
+            'severity'    => 'required|in:rendah,sedang,tinggi',
             'streak_days' => 'nullable|integer|min:0',
         ]);
 
-        // Jika streak belum diisi, anggap 0 hari.
-        Vice::create($validated + ['streak_days' => $validated['streak_days'] ?? 0]);
+        Vice::create($validated + [
+            'user_id'     => auth()->id(),
+            'streak_days' => $validated['streak_days'] ?? 0,
+        ]);
 
         return to_route('vice.index');
     }
 
     public function show(Vice $vice)
     {
-        //
+        $this->authorizeVice($vice);
     }
 
-    /**
-     * Tampilkan form edit untuk vice yang dipilih.
-     */
     public function edit(Vice $vice)
     {
+        $this->authorizeVice($vice);
+
         return view('pages.vice.edit', ['data' => $vice]);
     }
 
-    /**
-     * Perbarui data vice berdasarkan input yang sudah divalidasi.
-     */
     public function update(Request $request, Vice $vice)
     {
+        $this->authorizeVice($vice);
+
         $validated = $request->validate([
-            'habit_name' => 'required|string',
+            'habit_name'  => 'required|string',
             'description' => 'nullable|string',
-            'severity' => 'required|in:rendah,sedang,tinggi',
+            'severity'    => 'required|in:rendah,sedang,tinggi',
             'streak_days' => 'required|integer|min:0',
         ]);
 
@@ -73,13 +67,21 @@ class VicesController extends Controller
         return to_route('vice.index');
     }
 
-    /**
-     * Hapus vice yang dipilih.
-     */
     public function destroy(Vice $vice)
     {
+        $this->authorizeVice($vice);
         $vice->delete();
 
         return to_route('vice.index');
+    }
+
+    /**
+     * Pastikan vice yang diakses milik user yang sedang login.
+     */
+    private function authorizeVice(Vice $vice): void
+    {
+        if ($vice->user_id !== auth()->id()) {
+            abort(403, 'Kamu tidak punya akses ke kebiasaan ini.');
+        }
     }
 }

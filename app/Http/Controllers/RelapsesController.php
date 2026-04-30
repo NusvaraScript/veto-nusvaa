@@ -9,46 +9,45 @@ use Illuminate\Support\Facades\DB;
 
 class RelapsesController extends Controller
 {
-    /**
-     * Tampilkan daftar relapse terbaru dengan relasi vice.
-     */
     public function index()
     {
         return view('pages.relapse.index', [
-            'relapses' => Relapse::with('vice')->latest()->paginate(10),
+            'relapses' => Relapse::with('vice')
+                ->whereHas('vice', fn ($q) => $q->where('user_id', auth()->id()))
+                ->latest()
+                ->paginate(10),
         ]);
     }
 
-    /**
-     * Tampilkan form pencatatan relapse beserta opsi vice.
-     */
     public function create()
     {
-        $vices = Vice::all()->map(fn (Vice $vice) => [
-            'id' => $vice->id,
-            'label' => $vice->habit_name.' ('.ucfirst($vice->severity).')',
-        ]);
+        // Hanya tampilkan vice milik user sendiri
+        $vices = Vice::where('user_id', auth()->id())
+            ->get()
+            ->map(fn (Vice $vice) => [
+                'id'    => $vice->id,
+                'label' => $vice->habit_name.' ('.ucfirst($vice->severity).')',
+            ]);
 
         return view('pages.relapse.create', ['vices' => $vices]);
     }
 
-    /**
-     * Simpan data relapse dan reset streak vice ke 0 secara atomik.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'vices_id' => 'required|exists:vices,id',
+            'vices_id'       => 'required|exists:vices,id',
             'violation_date' => 'required|date',
-            'excuse' => 'nullable|string|max:500',
+            'excuse'         => 'nullable|string|max:500',
         ]);
 
-        DB::transaction(function () use ($validated): void {
-            // Catat kejadian relapse terlebih dahulu.
-            Relapse::create($validated);
+        // Pastikan vice yang dipilih memang milik user ini
+        $vice = Vice::where('id', $validated['vices_id'])
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
 
-            // Karena terjadi relapse, streak vice direset ke nol.
-            Vice::findOrFail($validated['vices_id'])->update(['streak_days' => 0]);
+        DB::transaction(function () use ($validated, $vice): void {
+            Relapse::create($validated);
+            $vice->update(['streak_days' => 0]);
         });
 
         return to_route('relapse.index')->with('success', 'Relapse berhasil dicatat!');
