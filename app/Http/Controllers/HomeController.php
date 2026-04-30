@@ -8,25 +8,34 @@ use App\Models\Vice;
 class HomeController extends Controller
 {
     /**
-     * Tampilkan dashboard ringkasan statistik progres user.
+     * Dashboard user: hanya menampilkan data milik user yang sedang login.
      */
     public function index()
     {
-        return view('pages.home.index', [
-            // Statistik umum.
-            'totalVices' => Vice::count(),
-            'totalRelapses' => Relapse::count(),
-            'avgStreak' => round(Vice::avg('streak_days') ?? 0, 1),
+        $userId = auth()->id();
 
-            // Distribusi vice berdasarkan tingkat severity.
-            'vicesRendah' => Vice::where('severity', 'rendah')->count(),
-            'vicesSedang' => Vice::where('severity', 'sedang')->count(),
-            'vicesTinggi' => Vice::where('severity', 'tinggi')->count(),
+        // Hanya ambil vice milik user ini
+        $userVices = Vice::where('user_id', $userId);
 
-            // Highlight data penting untuk dashboard.
-            'topStreakVices' => Vice::orderByDesc('streak_days')->take(5)->get(),
-            'latestVices' => Vice::latest()->take(5)->get(),
-            'latestRelapses' => Relapse::with('vice')->latest()->take(5)->get(),
+        return view('user.pages.home.index', [
+            // Statistik milik user sendiri
+            'totalVices'    => $userVices->count(),
+            'totalRelapses' => Relapse::whereHas('vice', fn ($q) => $q->where('user_id', $userId))->count(),
+            'avgStreak'     => round($userVices->avg('streak_days') ?? 0, 1),
+
+            // Distribusi severity milik user sendiri
+            'vicesRendah' => (clone $userVices)->where('severity', 'rendah')->count(),
+            'vicesSedang' => (clone $userVices)->where('severity', 'sedang')->count(),
+            'vicesTinggi' => (clone $userVices)->where('severity', 'tinggi')->count(),
+
+            // Highlight data personal
+            'topStreakVices'  => (clone $userVices)->orderByDesc('streak_days')->take(5)->get(),
+            'latestVices'     => (clone $userVices)->latest()->take(5)->get(),
+            'latestRelapses'  => Relapse::with('vice')
+                ->whereHas('vice', fn ($q) => $q->where('user_id', $userId))
+                ->latest()
+                ->take(5)
+                ->get(),
         ]);
     }
 }
