@@ -46,6 +46,16 @@ class AdminController extends Controller
         ]);
     }
 
+    public function users()
+    {
+        return view('admin.pages.users', [
+            'recentUsers' => User::where('role', 'user')
+                ->latest()
+                ->take(20)
+                ->get(['id', 'name', 'email', 'created_at']),
+        ]);
+    }
+
     public function storeUser(Request $request)
     {
         $validated = $request->validate([
@@ -63,7 +73,7 @@ class AdminController extends Controller
         ]);
 
         return redirect()
-            ->route('admin.dashboard')
+            ->route('admin.users.index')
             ->with('success', 'Akun user baru berhasil ditambahkan.');
     }
 
@@ -81,7 +91,7 @@ class AdminController extends Controller
         ]);
 
         return redirect()
-            ->route('admin.dashboard')
+            ->route('admin.users.index')
             ->with('success', "Password untuk {$user->name} berhasil diperbarui.");
     }
 }

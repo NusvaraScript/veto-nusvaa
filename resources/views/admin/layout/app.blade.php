@@ -8,80 +8,106 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="antialiased min-h-screen bg-gray-50 text-slate-900 font-sans">
+{{-- Perbaikan: Menambahkan kutipan penutup pada class body --}}
+<body class="antialiased h-screen flex flex-col bg-gray-50 text-slate-900 font-sans">
 
     {{-- Top Navbar --}}
     <nav class="bg-white border-b-4 border-black sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                {{-- Logo Section --}}
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 group">
-                    <div class="bg-black text-white p-1 border-2 border-black transition-transform group-hover:-translate-y-1 group-hover:translate-x-1">
-                        <span class="text-xl font-black tracking-tighter italic px-1">VN.</span>
-                    </div>
-                    <div class="hidden sm:block">
-                        <span class="text-lg font-bold tracking-tight uppercase">Admin<span class="text-red-600">Panel</span></span>
-                    </div>
-                </a>
-
-                {{-- User Actions --}}
+                
+                {{-- Brand & Mobile Toggle --}}
                 <div class="flex items-center gap-3">
-                    <div class="hidden md:flex flex-col items-end border-r-2 border-black pr-4 leading-tight">
-                        <span class="text-xs font-black uppercase text-gray-500 italic">Administrator</span>
-                        <span class="text-sm font-bold">{{ auth()->user()->name }}</span>
-                    </div>
+                    <button id="openAdminSidebar" class="md:hidden border-2 border-black px-2 py-1 bg-white hover:bg-gray-100 active:translate-y-0.5 transition-all">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
                     
-                    <form action="{{ route('logout') }}" method="POST" class="ml-1">
-                        @csrf
-                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all active:translate-x-[2px] active:translate-y-[2px]">
-                            <i class="fa-solid fa-power-off sm:mr-2"></i>
-                            <span class="hidden sm:inline uppercase text-xs">Keluar</span>
-                        </button>
-                    </form>
+                    <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 group">
+                        <div class="bg-black text-white p-1 border-2 border-black shadow-[2px_2px_0px_0px_rgba(220,38,38,1)]">
+                            <span class="text-xl font-black tracking-tighter italic px-1">VN.</span>
+                        </div>
+                        <div class="hidden sm:block">
+                            <span class="text-lg font-black tracking-tight uppercase">Admin<span class="text-red-600">Panel</span></span>
+                        </div>
+                    </a>
                 </div>
+
+                {{-- Logout Button --}}
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-black uppercase text-xs py-2 px-4 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
+                        Keluar
+                    </button>
+                </form>
             </div>
         </div>
     </nav>
 
     {{-- Main Content Container --}}
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex flex-1 overflow-hidden relative">
         
-        {{-- Flash Messages --}}
-        @if (session('success'))
-            <div class="mb-8 p-4 bg-green-100 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center gap-3">
-                <div class="bg-black text-white p-2">
-                    <i class="fa-solid fa-check-double text-lg"></i>
-                </div>
-                <span class="font-bold uppercase tracking-tight text-sm">{{ session('success') }}</span>
+        {{-- Backdrop --}}
+        <div id="adminSidebarBackdrop" class="fixed inset-0 z-40 bg-black/50 hidden md:hidden opacity-0 transition-opacity duration-300"></div>
+        
+        {{-- Sidebar --}}
+        <aside id="adminSidebar" class="fixed inset-y-0 left-0 z-50 w-64 border-r-2 border-black bg-white -translate-x-full transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:flex md:flex-col shadow-[4px_0px_0px_0px_rgba(0,0,0,1)] md:shadow-none">
+            
+            {{-- Close Button Mobile --}}
+            <div class="flex justify-end p-4 md:hidden">
+                <button id="closeAdminSidebar" class="text-white border-2 border-black px-2 py-1 bg-red-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
-        @endif
 
-        {{-- Admin Breadcrumbs / Info (Optional) --}}
-        <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
-            <div class="bg-yellow-300 border-2 border-black px-4 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                <p class="text-xs font-black uppercase tracking-widest">
-                    <i class="fa-solid fa-calendar-day mr-2"></i> {{ now()->format('l, d M Y') }}
-                </p>
+            {{-- Sidebar Component --}}
+            <div class="flex-1 overflow-y-auto pt-4 md:pt-0">
+                <x-admin-sidebar />
             </div>
-            <div class="flex gap-2">
-                <a href="{{ route('home') }}" target="_blank" class="bg-white hover:bg-gray-100 text-black border-2 border-black px-4 py-2 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all">
-                    <i class="fa-solid fa-up-right-from-square mr-2"></i> Lihat Situs
-                </a>
-            </div>
-        </div>
+        </aside>
 
         {{-- Page Content --}}
-        <div class="relative">
-            @yield('content')
-        </div>
-    </main>
+        <main class="flex-1 overflow-y-auto h-full bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                
+                {{-- Success Alert --}}
+                @if (session('success'))
+                    <div class="mb-6 p-4 bg-green-400 border-2 border-black font-bold uppercase text-xs shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                        <i class="fa-solid fa-check-circle mr-2"></i> {{ session('success') }}
+                    </div>
+                @endif
 
-    {{-- Simple Footer --}}
-    <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
-        <p class="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-            &copy; {{ date('Y') }} VetoNusvaa Admin System — v1.0.0
-        </p>
-    </footer>
+                @yield('content')
+            </div>
+        </main>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sidebar = document.getElementById('adminSidebar');
+        const backdrop = document.getElementById('adminSidebarBackdrop');
+        const openBtn = document.getElementById('openAdminSidebar');
+        const closeBtn = document.getElementById('closeAdminSidebar');
+
+        const toggle = (open) => {
+            if (open) {
+                sidebar.classList.remove('-translate-x-full');
+                backdrop.classList.remove('hidden');
+                // Kecil delay untuk trigger transisi opacity
+                setTimeout(() => backdrop.classList.add('opacity-100'), 10);
+                document.body.classList.add('overflow-hidden'); // Kunci scroll saat menu buka
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                backdrop.classList.remove('opacity-100');
+                document.body.classList.remove('overflow-hidden');
+                setTimeout(() => backdrop.classList.add('hidden'), 300);
+            }
+        };
+
+        openBtn?.addEventListener('click', () => toggle(true));
+        closeBtn?.addEventListener('click', () => toggle(false));
+        backdrop?.addEventListener('click', () => toggle(false));
+    });
+</script>
 
 </body>
 </html>

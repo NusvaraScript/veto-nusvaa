@@ -45,6 +45,7 @@ Route::middleware(['auth', 'admin'])
     ->name('admin.')
     ->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/users', [AdminController::class, 'users'])->name('users.index');
         Route::post('/users', [AdminController::class, 'storeUser'])->name('users.store');
         Route::patch('/users/{user}/password', [AdminController::class, 'updateUserPassword'])->name('users.password.update');
     });
