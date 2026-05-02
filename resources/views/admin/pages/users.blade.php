@@ -81,7 +81,13 @@
                                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-tight">{{ $user->email }}</p>
                             </td>
                             <td class="p-4">
-                                <p class="text-xs font-black uppercase">{{ $user->role }}</p>
+                                <p class="text-xs font-black uppercase"></p>
+                                @if($user->role == 'admin')
+                                    <span class="inline-block bg-red-500 border-2 border-black text-white text-[10px] font-bold uppercase px-2 py-1 mt-1">Admin</span>
+                                @elseif($user->role == 'user')
+                                    <span class="inline-block bg-white border-2 border-black text-black text-[10px] font-bold uppercase px-2 py-1 mt-1">User</span>
+                                @endif
+                                </p>
                             </td>
                             <td class="p-4">
                                 <span class="text-[10px] font-black uppercase border-2 border-black px-2 py-1 bg-white">

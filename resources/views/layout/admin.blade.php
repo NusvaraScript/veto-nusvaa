@@ -54,7 +54,7 @@
         <div id="adminSidebarBackdrop" class="fixed inset-0 z-40 bg-black/50 hidden md:hidden opacity-0 transition-opacity duration-300"></div>
         
         {{-- Sidebar --}}
-        <aside id="adminSidebar" class="fixed inset-y-0 left-0 z-50 w-64 border-r-2 border-black bg-white -translate-x-full transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:flex md:flex-col shadow-[4px_0px_0px_0px_rgba(0,0,0,1)] md:shadow-none">
+        <aside id="adminSidebar" class="fixed inset-y-0 left-0 z-50 w-64 md:w-16 md:hover:w-64 border-r-2 border-black bg-white -translate-x-full transition-all duration-300 ease-in-out md:relative md:translate-x-0 md:flex md:flex-col group overflow-hidden shadow-[4px_0px_0px_0px_rgba(0,0,0,1)] md:shadow-none">
             
             {{-- Close Button Mobile --}}
             <div class="flex justify-end p-4 md:hidden">
@@ -64,7 +64,7 @@
             </div>
 
             {{-- Sidebar Component --}}
-            <div class="flex-1 overflow-y-auto pt-4 md:pt-0">
+            <div class="flex-1 overflow-y-hidden md:group-hover:overflow-y-auto pt-4 md:pt-0">
                 <x-admin-sidebar />
             </div>
         </aside>

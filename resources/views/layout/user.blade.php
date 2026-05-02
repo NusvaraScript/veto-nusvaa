@@ -14,7 +14,7 @@
     @endif
 </head>
 
-<body class="antialiased h-screen flex flex-col bg-white text-slate-900">
+<body class="antialiased h-screen flex flex-col bg-gray-50 text-slate-900">
     
     <x-navbar />
 
@@ -29,8 +29,8 @@
         {{-- SIDEBAR --}}
         <aside 
             id="mobileSidebar"
-            class="fixed inset-y-0 left-0 z-50 w-64 border-r-2 border-black bg-white -translate-x-full transition-transform duration-300 ease-in-out 
-                   md:relative md:translate-x-0 md:flex md:flex-col"
+            class="fixed inset-y-0 left-0 z-50 w-64 md:w-16 md:hover:w-64 border-r-2 border-black bg-white -translate-x-full transition-all duration-300 ease-in-out 
+                   md:relative md:translate-x-0 md:flex md:flex-col group overflow-hidden"
         >
             {{-- Tombol Close Mobile --}}
             <div class="flex justify-end p-4 md:hidden">
@@ -39,7 +39,7 @@
                 </button>
             </div>
 
-            <div class="flex-1 overflow-y-auto">
+            <div class="flex-1 overflow-y-hidden md:group-hover:overflow-y-auto">
                 <x-sidebar />
             </div>
         </aside>
