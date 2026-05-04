@@ -1,4 +1,4 @@
-@extends('user.layout.app')
+@extends('layout.user')
 @section('title', 'Form Edit - VetoNusvaa')
 
 @section('content')
@@ -34,9 +34,9 @@
                         <select name="severity" id="severity" required
                             class="w-full border-2 border-black p-3 bg-white font-bold text-sm focus:ring-0 focus:border-black outline-none transition-all">
                             <option value="" disabled>-- PILIH LEVEL --</option>
-                            <option value="rendah" {{ $data->severity == 'rendah' ? 'selected' : '' }}>RENDAH</option>
-                            <option value="sedang" {{ $data->severity == 'sedang' ? 'selected' : '' }}>SEDANG</option>
-                            <option value="tinggi" {{ $data->severity == 'tinggi' ? 'selected' : '' }}>TINGGI</option>
+                            <option value="rendah" {{ old($data->severity) == 'rendah' ? 'selected' : '' }}>RENDAH</option>
+                            <option value="sedang" {{ old($data->severity) == 'sedang' ? 'selected' : '' }}>SEDANG</option>
+                            <option value="tinggi" {{ old($data->severity) == 'tinggi' ? 'selected' : '' }}>TINGGI</option>
                         </select>
                         @error('severity')
                             <p class="text-red-600 text-[10px] font-bold uppercase mt-1 italic">{{ $message }}</p>

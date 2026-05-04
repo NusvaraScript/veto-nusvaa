@@ -24,13 +24,19 @@ Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout')
     ->middleware('auth');
 
+Route::get('/', function () {
+    return auth()->check()
+        ? redirect()->route('home')
+        : view('index');
+})->name('landing');
+
 /*
 |--------------------------------------------------------------------------
 | User routes — hanya user yang sudah login
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resource('/vice', VicesController::class);
     Route::resource('/relapse', RelapsesController::class);
 });
@@ -45,6 +51,7 @@ Route::middleware(['auth', 'admin'])
     ->name('admin.')
     ->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/users', [AdminController::class, 'users'])->name('users.index');
         Route::post('/users', [AdminController::class, 'storeUser'])->name('users.store');
         Route::patch('/users/{user}/password', [AdminController::class, 'updateUserPassword'])->name('users.password.update');
     });

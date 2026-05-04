@@ -18,5 +18,5 @@
 @endphp
 
 <a href="{{ $route }}" target="{{ $target }}" class="{{ $button }} {{ $class }}" onclick="{{ $onclick }}">
-    {{ $slot }}
+    {{ $slot }} 
 </a>

@@ -1,4 +1,4 @@
-@extends('user.layout.app')
+@extends('layout.user')
 @section('title', 'Riwayat Relapse - VetoNusvaa')
 
 @section('content')
