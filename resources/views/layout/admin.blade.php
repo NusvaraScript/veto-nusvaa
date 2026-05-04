@@ -16,35 +16,84 @@
 <body class="antialiased h-screen flex flex-col bg-gray-50 text-slate-900 font-sans">
 
     {{-- Top Navbar --}}
-    <nav class="bg-white border-b-4 border-black sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="bg-white border-b-4 border-black sticky top-0 z-50 overflow-hidden">
+
+        <div class="w-full px-4 sm:px-6 lg:px-8">
+    
             <div class="flex justify-between items-center h-16">
-                
-                {{-- Brand & Mobile Toggle --}}
-                <div class="flex items-center gap-3">
-                    <button id="openAdminSidebar" class="md:hidden border-2 border-black px-2 py-1 bg-white hover:bg-gray-100 active:translate-y-0.5 transition-all">
+    
+                {{-- Left Section --}}
+                <div class="flex items-center gap-3 min-w-0">
+    
+                    {{-- Mobile Toggle --}}
+                    <button
+                        id="openAdminSidebar"
+                        class="md:hidden flex-shrink-0 border-2 border-black px-2 py-1 bg-white hover:bg-gray-100 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
+                    >
                         <i class="fa-solid fa-bars"></i>
                     </button>
-                    
-                    <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 group">
-                        <div class="bg-black text-white p-1 border-2 border-black shadow-[2px_2px_0px_0px_rgba(220,38,38,1)]">
-                            <span class="text-xl font-black tracking-tighter italic px-1">VN.</span>
+    
+                    {{-- Logo --}}
+                    <a href="{{ route('admin.dashboard') }}"
+                       class="flex items-center gap-2 min-w-0">
+    
+                        <div class="flex-shrink-0 bg-black text-white p-1 border-2 border-black shadow-[2px_2px_0px_0px_rgba(220,38,38,1)]">
+                            <span class="text-xl font-black tracking-tighter italic px-1">
+                                VN.
+                            </span>
                         </div>
-                        <div class="hidden sm:block">
-                            <span class="text-lg font-black tracking-tight uppercase">Admin<span class="text-red-600">Panel</span></span>
+    
+                        <div class="hidden sm:block truncate">
+                            <span class="text-lg font-black tracking-tight uppercase whitespace-nowrap">
+                                Admin<span class="text-red-600">Panel</span>
+                            </span>
                         </div>
+    
                     </a>
+    
                 </div>
-
-                {{-- Logout Button --}}
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-black uppercase text-xs py-2 px-4 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] transition-all">
-                        Keluar
-                    </button>
-                </form>
+    
+                {{-- Right Section --}}
+                <div class="flex items-center gap-3 flex-shrink-0">
+    
+                    {{-- User --}}
+                    @auth
+                        <div class="hidden md:flex items-center gap-2 border-l-2 border-black pl-4 h-8">
+    
+                            <div class="w-7 h-7 flex items-center justify-center border-2 border-black bg-white">
+                                <i class="fa-solid fa-user text-[10px]"></i>
+                            </div>
+    
+                            <span class="text-xs font-black uppercase whitespace-nowrap">
+                                {{ auth()->user()->name }}
+                            </span>
+    
+                        </div>
+                    @endauth
+    
+                    {{-- Logout --}}
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+    
+                        <button
+                            type="submit"
+                            class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-black uppercase text-xs py-2 px-4 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] transition-all"
+                        >
+                            <i class="fa-solid fa-right-from-bracket"></i>
+    
+                            <span class="hidden sm:inline">
+                                Keluar
+                            </span>
+                        </button>
+    
+                    </form>
+    
+                </div>
+    
             </div>
+    
         </div>
+    
     </nav>
 
     {{-- Main Content Container --}}
