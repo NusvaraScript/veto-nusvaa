@@ -12,46 +12,51 @@
             </p>
         </div>
 
-        {{-- Statistik Utama - Bersih --}}
-        <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <x-card class="border-2 border-black rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] bg-white">
-                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-500">Total Kebiasaan</p>
-                <p class="mt-1 text-3xl font-black">{{ $totalVices }}</p>
-            </x-card>
-
-            <x-card class="border-2 border-black rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] bg-white">
-                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-500 text-red-600">Total Relapse</p>
-                <p class="mt-1 text-3xl font-black text-red-600">{{ $totalRelapses }}</p>
-            </x-card>
-
-            <x-card class="border-2 border-black rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] bg-white">
-                <p class="text-[10px] font-bold uppercase tracking-widest text-gray-500 text-green-600">Rata-rata Streak</p>
-                <p class="mt-1 text-3xl font-black text-green-600">{{ $avgStreak }} <span
-                        class="text-sm font-bold">Hari</span></p>
-            </x-card>
-        </div>
-
-        {{-- Distribusi Keparahan - Minimalis & Lancip --}}
-        <div class="mb-6 border-2 border-black bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-            <div class="border-b-2 border-black p-3 bg-gray-50">
-                <h3 class="text-xs font-black uppercase tracking-tight">Analisis Keparahan</h3>
+        {{-- Statistik Utama - Selaras dengan Admin --}}
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+            <div class="border-2 border-black bg-white p-6 shadow-[4px_4px_0px_#000] relative overflow-hidden group">
+                <p class="text-[10px] font-black uppercase italic text-gray-400">Total Kebiasaan</p>
+                <p class="text-5xl font-black mt-2 tracking-tighter">{{ $totalVices }}</p>
+                <div class="absolute -right-4 -bottom-4 text-gray-50 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <i class="fa-solid fa-layer-group text-8xl"></i>
+                </div>
             </div>
-            <div class="grid grid-cols-1 divide-y-2 divide-black sm:grid-cols-3 sm:divide-y-0 sm:divide-x-2">
-                <div class="p-4 flex items-center justify-between sm:flex-col sm:items-start gap-2">
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-green-600">Rendah</span>
-                    <p class="text-2xl font-black">{{ $vicesRendah }}</p>
+
+            <div class="border-2 border-black bg-white p-6 shadow-[4px_4px_0px_#000] relative overflow-hidden group">
+                <p class="text-[10px] font-black uppercase italic text-red-600">Total Relapse</p>
+                <p class="text-5xl font-black mt-2 tracking-tighter text-black">{{ $totalRelapses }}</p>
+                <div class="absolute -right-4 -bottom-4 text-red-50 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <i class="fa-solid fa-triangle-exclamation text-8xl text-red-600"></i>
                 </div>
-                <div class="p-4 flex items-center justify-between sm:flex-col sm:items-start gap-2">
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-yellow-600">Sedang</span>
-                    <p class="text-2xl font-black">{{ $vicesSedang }}</p>
-                </div>
-                <div class="p-4 flex items-center justify-between sm:flex-col sm:items-start gap-2">
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-red-600">Tinggi</span>
-                    <p class="text-2xl font-black">{{ $vicesTinggi }}</p>
+            </div>
+
+            <div class="border-2 border-black bg-white p-6 shadow-[4px_4px_0px_#000] relative overflow-hidden group">
+                <p class="text-[10px] font-black uppercase italic text-green-600">Rata-rata Streak</p>
+                <p class="text-5xl font-black mt-2 tracking-tighter text-black">{{ $avgStreak }} <span class="text-xl font-bold">Hari</span></p>
+                <div class="absolute -right-4 -bottom-4 text-green-50 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <i class="fa-solid fa-fire text-8xl text-green-600"></i>
                 </div>
             </div>
         </div>
 
+        {{-- Distribusi Keparahan - Selaras dengan Admin --}}
+        <div class="mb-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="border-2 border-black bg-green-500 p-6 shadow-[6px_6px_0px_#000] text-white">
+                <p class="text-[10px] uppercase font-black italic tracking-widest">Rendah</p>
+                <p class="text-4xl font-black mt-1">{{ $vicesRendah }}</p>
+                <p class="text-[9px] font-bold uppercase mt-2 opacity-80 italic">Status: Aman</p>
+            </div>
+            <div class="border-2 border-black bg-yellow-400 p-6 shadow-[6px_6px_0px_#000] text-black">
+                <p class="text-[10px] uppercase font-black italic tracking-widest">Sedang</p>
+                <p class="text-4xl font-black mt-1">{{ $vicesSedang }}</p>
+                <p class="text-[9px] font-bold uppercase mt-2 opacity-60 italic">Status: Pantau</p>
+            </div>
+            <div class="border-2 border-black bg-red-600 p-6 shadow-[6px_6px_0px_#000] text-white">
+                <p class="text-[10px] uppercase font-black italic tracking-widest">Tinggi</p>
+                <p class="text-4xl font-black mt-1">{{ $vicesTinggi }}</p>
+                <p class="text-[9px] font-bold uppercase mt-2 opacity-80 italic">Status: Kritis</p>
+            </div>
+        </div>
         {{-- Tabel Data & List - Fokus pada Konten --}}
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
 
