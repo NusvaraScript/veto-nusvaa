@@ -31,7 +31,7 @@ Aplikasi ini menyediakan manajemen pengguna dengan peran (Admin & User), antarmu
 - **Bahasa Pemrograman**: PHP 8.2, JavaScript
 - **Framework**: Laravel 11.0
 - **Frontend**: Tailwind CSS v4.2, Vite
-- **Database**: SQLite (konfigurasi default), didukung driver database Laravel lainnya.
+- **Database**: MySQL (konfigurasi default), didukung driver database Laravel lainnya.
 - **Library Utama**: Pest (Testing Framework)
 - **Tools Pendukung**: Composer, NPM, Node.js
 
