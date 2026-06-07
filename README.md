@@ -47,7 +47,7 @@ graph TD
     Client[Client / Web Browser] -->|HTTP Request| Route[Routes web.php]
     Route -->|Dispatch| Controller[Controllers]
     Controller -->|Read/Write| Model[Models Eloquent]
-    Model -->|Query| DB[(Database SQLite)]
+    Model -->|Query| DB[(Database MySQL)]
     Controller -->|Render| View[Blade Views]
     View -->|HTML/CSS/JS| Client
 ```
